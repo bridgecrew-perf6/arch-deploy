@@ -134,6 +134,7 @@ makeArch () {
 makeDisks
 makeUsers
 makeLocale
+makePostScript
 
 printf "\n
 DISK: $DISK
