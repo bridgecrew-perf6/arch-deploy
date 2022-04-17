@@ -23,7 +23,7 @@ makeDisks () {
     mklabel gpt \
     mkpart "BOOT" fat32 1MiB 256MiB \
     set 1 esp on \
-    mkpart "ROOT" ext4 256MiB 100%
+    mkpart "ROOT" ext4 256MiB 100% \
     print
     
     mkfs.vfat $DISK_BOOT && mkfs.ext4 $DISK_ROOT
