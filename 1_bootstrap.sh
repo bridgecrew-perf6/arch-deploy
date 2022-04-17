@@ -85,7 +85,6 @@ hwclock --systohc --utc
 
 # NETWORK
 echo mommy > /etc/hostname
-systemctl enable dhcpcd bluetooth
 
 # BOOT
 efibootmgr -v -d /dev/sdc -p 1 -c -L "ArchZen" -l /vmlinuz-linux-zen -u 'root=PARTUUID=$(blkid -s PARTUUID -o value ${DISK_ROOT}) rw initrd=\amd-ucode.img initrd=\booster-linux-zen.img'
@@ -94,7 +93,7 @@ efibootmgr -v -d /dev/sdc -p 1 -c -L "ArchZen" -l /vmlinuz-linux-zen -u 'root=PA
 pacman-key --recv-key FBA220DFC880C036 --keyserver keyserver.ubuntu.com
 pacman-key --lsign-key FBA220DFC880C036
 pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
-printtf "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist" >> /etc/pacman.conf
+printf "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist" >> /etc/pacman.conf
 sed -i '/#\[multilib\]/,/#Include = \/etc\/pacman.d\/mirrorlist/ s/#//' /etc/pacman.conf
 sed -i '/#\[multilib-testing\]/,/#Include = \/etc\/pacman.d\/mirrorlist/ s/#//' /etc/pacman.conf
 sed -i '/#\[community-testing\]/,/#Include = \/etc\/pacman.d\/mirrorlist/ s/#//' /etc/pacman.conf
@@ -110,7 +109,9 @@ paru -S ${PKGS_DESKTOP}
 paru -S ${PKGS_MISC}
 paru -S ${PKGS_GAMING}
 paru -S ${PKGS_VM}
-systemctl enable --now libvirtd
+
+# Services
+systemctl enable dhcpcd bluetooth libvirtd
 usermod -a -G libvirt ${USERNAME}
 virsh net-list --all
 virsh net-start default
@@ -127,7 +128,7 @@ makeArch () {
     genfstab -U /mnt > /mnt/etc/fstab
     
     makePostScript
-    arch-chroot /mnt/root/2_chroot.sh
+    arch-chroot /mnt /root/2_chroot.sh
     rm -rf /mnt/root/2_chroot.sh
 }
 
