@@ -129,7 +129,6 @@ makeArch () {
     
     makePostScript
     arch-chroot /mnt /root/2_chroot.sh
-    rm -rf /mnt/root/2_chroot.sh
 }
 
 makeDisks
