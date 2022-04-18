@@ -72,7 +72,7 @@ makePostScript () {
 useradd -m -G users,wheel ${USERNAME}
 echo "${USERNAME}:${USER_PASSWORD}" | chpasswd
 echo "root:${ROOT_PASSWORD}" | chpasswd
-echo "%wheel ALL=(ALL) ALL" > /etc/sudoers.d/wheel
+echo "%wheel ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/wheel
 
 # LOCALE
 echo en_US.UTF-8 UTF-8 > /etc/locale.gen
@@ -104,12 +104,12 @@ pacman -Syyu
 pacman -S paru
 
 # Packages
-runuser -l $USERNAME -c 'paru -S ${PKGS_VIDEO}'
-runuser -l $USERNAME -c 'paru -S ${PKGS_SOUND}'
-runuser -l $USERNAME -c 'paru -S ${PKGS_GNOME}'
-runuser -l $USERNAME -c 'paru -S ${PKGS_MISC}'
-runuser -l $USERNAME -c 'paru -S ${PKGS_GAMING}'
-runuser -l $USERNAME -c 'paru -S ${PKGS_VM}'
+su - $USERNAME -c 'paru -S ${PKGS_VIDEO}'
+su - $USERNAME -c 'paru -S ${PKGS_SOUND}'
+su - $USERNAME -c 'paru -S ${PKGS_GNOME}'
+su - $USERNAME -c 'paru -S ${PKGS_MISC}'
+su - $USERNAME -c 'paru -S ${PKGS_GAMING}'
+su - $USERNAME -c 'paru -S ${PKGS_VM}'
 
 # Services
 systemctl enable dhcpcd bluetooth libvirtd networkmanager
