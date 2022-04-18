@@ -112,7 +112,7 @@ su - $USERNAME -c 'paru -S ${PKGS_GAMING}'
 su - $USERNAME -c 'paru -S ${PKGS_VM}'
 
 # Services
-systemctl enable dhcpcd bluetooth libvirtd networkmanager
+systemctl enable dhcpcd bluetooth libvirtd networkmanager gdm
 usermod -a -G libvirt ${USERNAME}
 
 # Exit from chroot
