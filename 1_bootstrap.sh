@@ -104,12 +104,12 @@ pacman -Syyu
 pacman -S paru
 
 # Packages
-paru -S ${PKGS_VIDEO}
-paru -S ${PKGS_SOUND}
-paru -S ${PKGS_DESKTOP}
-paru -S ${PKGS_MISC}
-paru -S ${PKGS_GAMING}
-paru -S ${PKGS_VM}
+runuser -l $USERNAME -c 'paru -S ${PKGS_VIDEO}'
+runuser -l $USERNAME -c 'paru -S ${PKGS_SOUND}'
+runuser -l $USERNAME -c 'paru -S ${PKGS_DESKTOP}'
+runuser -l $USERNAME -c 'paru -S ${PKGS_MISC}'
+runuser -l $USERNAME -c 'paru -S ${PKGS_GAMING}'
+runuser -l $USERNAME -c 'paru -S ${PKGS_VM}'
 
 # Services
 systemctl enable dhcpcd bluetooth libvirtd
