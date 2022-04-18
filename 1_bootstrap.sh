@@ -7,7 +7,7 @@
 # * Packages
 PKGS_BASE="base base-devel linux-firmware linux-zen amd-ucode neovim dhcpcd efibootmgr booster"
 PKGS_VIDEO="xf86-video-amdgpu vulkan-radeon mesa mesa-vdpau libva-mesa-driver opencl-amd opencl-icd-loader vulkan-icd-loader lib32-mesa lib32-mesa-vdpau lib32-libva-mesa-driver lib32-vulkan-icd-loader lib32-opencl-icd-loader lib32-vulkan-radeon"
-PKGS_SOUND="pipewire-pulse pipewire-alsa pipewire-jack wireplumber playerctl easyeffects carla"
+PKGS_SOUND="pipewire-pulse pipewire-alsa pipewire-jack wireplumber bluez bluez-utils playerctl easyeffects carla"
 PKGS_DESKTOP="xdg-desktop-portal xdg-desktop-portal-wlr xorg-xwayland qt5-wayland qt6-wayland libnotify python2 python3 python-pip imagemagick sway foot foot-terminfo mpv imv nerd-fonts-victor-mono bashmount-git udisks2 jmtpfs"
 PKGS_MISC="obs-studio-git steam ungoogled-chromium discord-canary libxcrypt-compat davinci-resolve-studio"
 PKGS_GAMING="wine-staging lutris mangohud goverlay rumtricks gamemode lib32-gamemode lib32-mangohud"
