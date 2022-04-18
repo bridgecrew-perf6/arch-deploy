@@ -4,7 +4,7 @@
 PKGS_BASE="base base-devel linux-firmware linux-zen amd-ucode neovim dhcpcd efibootmgr booster"
 PKGS_VIDEO="xf86-video-amdgpu vulkan-radeon mesa mesa-vdpau libva-mesa-driver opencl-amd opencl-icd-loader vulkan-icd-loader lib32-mesa lib32-mesa-vdpau lib32-libva-mesa-driver lib32-vulkan-icd-loader lib32-opencl-icd-loader lib32-vulkan-radeon"
 PKGS_SOUND="pipewire-pulse pipewire-alsa pipewire-jack wireplumber bluez bluez-utils playerctl easyeffects carla"
-PKGS_GNOME="gnome zsh networkmanager xdg-desktop-portal xdg-desktop-portal-gnome xorg-xwayland qt5-wayland qt6-wayland nerd-fonts-victor-mono"
+PKGS_GNOME="pavucontrol gnome zsh networkmanager xdg-desktop-portal xdg-desktop-portal-gnome xorg-xwayland qt5-wayland qt6-wayland nerd-fonts-victor-mono"
 #PKGS_SWAY="xdg-desktop-portal xdg-desktop-portal-wlr xorg-xwayland qt5-wayland qt6-wayland libnotify python2 python3 python-pip imagemagick sway foot foot-terminfo mpv imv nerd-fonts-victor-mono bashmount-git udisks2 jmtpfs"
 PKGS_MISC="obs-studio-git ungoogled-chromium discord libxcrypt-compat davinci-resolve-studio vscodium vscodium-marketplace"
 PKGS_GAMING="steam wine-staging lutris mangohud goverlay rumtricks gamemode lib32-gamemode lib32-mangohud"
