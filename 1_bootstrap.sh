@@ -72,8 +72,8 @@ makeLocale () {
 makePostScript () {
     cat > /mnt/root/2_chroot.sh <<EOF
 # USERS
-echo "${USERNAME}:${USER_PASSWORD}" | chpasswd
 useradd -m -G users,wheel ${USERNAME}
+echo "${USERNAME}:${USER_PASSWORD}" | chpasswd
 echo "root:${ROOT_PASSWORD}" | chpasswd
 echo "%wheel ALL=(ALL) ALL" > /etc/sudoers.d/wheel
 
