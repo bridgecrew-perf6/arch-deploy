@@ -96,9 +96,9 @@ sed -i '/#\[multilib\]/,/#Include = \/etc\/pacman.d\/mirrorlist/ s/#//' /etc/pac
 sed -i '/#\[multilib-testing\]/,/#Include = \/etc\/pacman.d\/mirrorlist/ s/#//' /etc/pacman.conf
 sed -i '/#\[community-testing\]/,/#Include = \/etc\/pacman.d\/mirrorlist/ s/#//' /etc/pacman.conf
 sed -i '/#\[testing\]/,/#Include = \/etc\/pacman.d\/mirrorlist/ s/#//' /etc/pacman.conf
-sudo sed -i 's/#ParallelDownloads/ParallelDownloads/g' /etc/pacman.conf
-sudo sed -i 's/#Color/Color/g' /etc/pacman.conf
-sudo sed -i 's/#MAKEFLAGS="-j2"/MAKEFLAGS="-j'$(nproc)'"/g' /etc/makepkg.conf
+sed -i 's/#ParallelDownloads/ParallelDownloads/g' /etc/pacman.conf
+sed -i 's/#Color/Color/g' /etc/pacman.conf
+sed -i 's/#MAKEFLAGS="-j2"/MAKEFLAGS="-j'$(nproc)'"/g' /etc/makepkg.conf
 
 pacman -Syyu
 pacman -S paru
