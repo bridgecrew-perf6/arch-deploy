@@ -1,20 +1,17 @@
 #!/bin/bash
-# TODO:
-# Import .config and etc
-# Create prompt for HOSTNAME, Locale
 
-
-# * Packages
+# Packages (choose between PKGS_GNOME/PKGS_SWAY)
 PKGS_BASE="base base-devel linux-firmware linux-zen amd-ucode neovim dhcpcd efibootmgr booster"
 PKGS_VIDEO="xf86-video-amdgpu vulkan-radeon mesa mesa-vdpau libva-mesa-driver opencl-amd opencl-icd-loader vulkan-icd-loader lib32-mesa lib32-mesa-vdpau lib32-libva-mesa-driver lib32-vulkan-icd-loader lib32-opencl-icd-loader lib32-vulkan-radeon"
 PKGS_SOUND="pipewire-pulse pipewire-alsa pipewire-jack wireplumber bluez bluez-utils playerctl easyeffects carla"
-PKGS_DESKTOP="xdg-desktop-portal xdg-desktop-portal-wlr xorg-xwayland qt5-wayland qt6-wayland libnotify python2 python3 python-pip imagemagick sway foot foot-terminfo mpv imv nerd-fonts-victor-mono bashmount-git udisks2 jmtpfs"
-PKGS_MISC="obs-studio-git steam ungoogled-chromium discord-canary libxcrypt-compat davinci-resolve-studio"
-PKGS_GAMING="wine-staging lutris mangohud goverlay rumtricks gamemode lib32-gamemode lib32-mangohud"
+PKGS_GNOME="gnome zsh networkmanager"
+#PKGS_SWAY="xdg-desktop-portal xdg-desktop-portal-wlr xorg-xwayland qt5-wayland qt6-wayland libnotify python2 python3 python-pip imagemagick sway foot foot-terminfo mpv imv nerd-fonts-victor-mono bashmount-git udisks2 jmtpfs"
+PKGS_MISC="obs-studio-git ungoogled-chromium discord libxcrypt-compat davinci-resolve-studio vscodium"
+PKGS_GAMING="steam wine-staging lutris mangohud goverlay rumtricks gamemode lib32-gamemode lib32-mangohud"
 PKGS_VM="qemu virt-manager dnsmasq dmidecode iptables-nft"
 
 makeDisks () {
-    read -p "Choose disk to use [/dev/sdc]: `echo $'\n'`" DISK
+    read -p "Choose disk to use [/dev/sdc]: " DISK
     DISK=${DISK:-/dev/sdc}
     DISK_BOOT="${DISK}1"
     DISK_ROOT="${DISK}2"
@@ -37,21 +34,21 @@ makeUsers () {
     read -p "Type username [glo]: " USERNAME
     USERNAME=${USERNAME:-glo}
     
-    read -p "Type ${USERNAME}'s password" -s USER_PASSWORD
-    read -p "And again" -s RETRY_USER_PASSWORD
+    read -p "Type ${USERNAME}'s password -" -s USER_PASSWORD
+    read -p " - And again - " -s RETRY_USER_PASSWORD
     if [ "$USER_PASSWORD" = "$RETRY_USER_PASSWORD" ]; then
-        echo "Correct password, continuing"
+        echo " - Correct password, continuing"
     else
-        echo "Incorrect password, try again"
+        echo " - Incorrect password, try again"
         makeUsers
     fi
     
-    read -p "Type ROOT password" -s ROOT_PASSWORD
-    read -p "And again" -s RETRY_ROOT_PASSWORD
+    read -p "Type ROOT password " -s ROOT_PASSWORD
+    read -p " - And again" -s RETRY_ROOT_PASSWORD
     if [ "$ROOT_PASSWORD" = "$RETRY_ROOT_PASSWORD" ]; then
-        echo "Correct password, continuing"
+        echo " - Correct password, continuing"
     else
-        echo "Incorrect password, try again"
+        echo " - Incorrect password, try again"
         makeUsers
     fi
 }
@@ -88,7 +85,7 @@ hwclock --systohc --utc
 echo mommy > /etc/hostname
 
 # BOOT
-efibootmgr -v -d /dev/sdc -p 1 -c -L "ArchZen" -l /vmlinuz-linux-zen -u 'root=PARTUUID=$(blkid -s PARTUUID -o value ${DISK_ROOT}) rw initrd=\amd-ucode.img initrd=\booster-linux-zen.img'
+efibootmgr -v -d ${DISK} -p 1 -c -L "ArchZen" -l /vmlinuz-linux-zen -u 'root=PARTUUID=$(blkid -s PARTUUID -o value ${DISK_ROOT}) rw initrd=\amd-ucode.img initrd=\booster-linux-zen.img'
 
 # AUR helper
 pacman-key --recv-key FBA220DFC880C036 --keyserver keyserver.ubuntu.com
@@ -99,6 +96,9 @@ sed -i '/#\[multilib\]/,/#Include = \/etc\/pacman.d\/mirrorlist/ s/#//' /etc/pac
 sed -i '/#\[multilib-testing\]/,/#Include = \/etc\/pacman.d\/mirrorlist/ s/#//' /etc/pacman.conf
 sed -i '/#\[community-testing\]/,/#Include = \/etc\/pacman.d\/mirrorlist/ s/#//' /etc/pacman.conf
 sed -i '/#\[testing\]/,/#Include = \/etc\/pacman.d\/mirrorlist/ s/#//' /etc/pacman.conf
+sudo sed -i 's/#ParallelDownloads/ParallelDownloads/g' /etc/pacman.conf
+sudo sed -i 's/#Color/Color/g' /etc/pacman.conf
+sudo sed -i 's/#MAKEFLAGS="-j2"/MAKEFLAGS="-j'$(nproc)'"/g' /etc/makepkg.conf
 
 pacman -Syyu
 pacman -S paru
@@ -106,16 +106,14 @@ pacman -S paru
 # Packages
 runuser -l $USERNAME -c 'paru -S ${PKGS_VIDEO}'
 runuser -l $USERNAME -c 'paru -S ${PKGS_SOUND}'
-runuser -l $USERNAME -c 'paru -S ${PKGS_DESKTOP}'
+runuser -l $USERNAME -c 'paru -S ${PKGS_GNOME}'
 runuser -l $USERNAME -c 'paru -S ${PKGS_MISC}'
 runuser -l $USERNAME -c 'paru -S ${PKGS_GAMING}'
 runuser -l $USERNAME -c 'paru -S ${PKGS_VM}'
 
 # Services
-systemctl enable dhcpcd bluetooth libvirtd
+systemctl enable dhcpcd bluetooth libvirtd networkmanager
 usermod -a -G libvirt ${USERNAME}
-virsh net-list --all
-virsh net-start default
 
 # Exit from chroot
 exit
