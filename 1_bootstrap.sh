@@ -10,7 +10,7 @@ PKGS_VIDEO="xf86-video-amdgpu vulkan-radeon mesa mesa-vdpau libva-mesa-driver op
 PKGS_SOUND="pipewire{,-pulse,-alsa,-jack} wireplumber playerctl easyeffects carla"
 PKGS_DESKTOP="xdg-desktop-portal{,-wlr} xorg-xwayland qt{5-wayland,6-wayland} libnotify python{2,3,-pip} imagemagick sway foot{,-terminfo} mpv imv nerd-fonts-victor-mono bashmount udisks2 jmptfs"
 PKGS_MISC="obs-studio-git steam ungoogled-chromium discord-canary libxcrypt-compat davinci-resolve-studio"
-PKGS_GAMING="wine-staging lutris mangohud goverlay rumtricks gamemode lib32-{gamemode,mangohub}"
+PKGS_GAMING="wine-staging lutris mangohud goverlay rumtricks gamemode lib32-{gamemode,mangohud}"
 PKGS_VM="qemu virt-manager dnsmasq dmidecode iptables-nft"
 
 makeDisks () {
